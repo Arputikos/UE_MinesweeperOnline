@@ -50,6 +50,10 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FOnGameLost OnGameLost;
 
+	void MoveCamera(float x, float y);
+
+	void ZoomCamera(float z);
+
 protected:
 	//Delegate-called functions
 	UFUNCTION()

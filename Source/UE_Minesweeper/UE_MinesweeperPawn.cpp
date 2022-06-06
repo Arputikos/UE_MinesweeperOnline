@@ -7,6 +7,8 @@
 #include "GameFramework/PlayerController.h"
 #include "Engine/World.h"
 #include "DrawDebugHelpers.h"
+#include "UE_MinesweeperBlockGrid.h"
+#include "UE_MinesweeperGameMode.h"
 
 AUE_MinesweeperPawn::AUE_MinesweeperPawn(const FObjectInitializer& ObjectInitializer) 
 	: Super(ObjectInitializer)
@@ -45,6 +47,9 @@ void AUE_MinesweeperPawn::SetupPlayerInputComponent(UInputComponent* PlayerInput
 
 	PlayerInputComponent->BindAction("ResetVR", EInputEvent::IE_Pressed, this, &AUE_MinesweeperPawn::OnResetVR);
 	PlayerInputComponent->BindAction("TriggerClick", EInputEvent::IE_Pressed, this, &AUE_MinesweeperPawn::TriggerClick);
+	PlayerInputComponent->BindAxis("MouseMoveX", this, &AUE_MinesweeperPawn::MouseMovedX);
+	PlayerInputComponent->BindAxis("MouseMoveY", this, &AUE_MinesweeperPawn::MouseMovedY);
+	PlayerInputComponent->BindAxis("MouseWheel", this, &AUE_MinesweeperPawn::MouseWheelMoved);
 }
 
 void AUE_MinesweeperPawn::CalcCamera(float DeltaTime, struct FMinimalViewInfo& OutResult)
@@ -61,6 +66,37 @@ void AUE_MinesweeperPawn::OnResetVR()
 
 void AUE_MinesweeperPawn::TriggerClick()
 {
+}
+
+void AUE_MinesweeperPawn::MouseMovedX(float NewValue)
+{
+	if (APlayerController* PC = Cast<APlayerController>(GetController()))
+	{
+		if(PC->IsInputKeyDown(EKeys::RightMouseButton))
+		{
+			AUE_MinesweeperGameMode* GameMode= (AUE_MinesweeperGameMode*)GetWorld()->GetAuthGameMode();
+			if(GameMode)
+				GameMode->MoveCamera(NewValue, 0);
+		}
+	}
+}
+void AUE_MinesweeperPawn::MouseMovedY(float NewValue)
+{
+	if (APlayerController* PC = Cast<APlayerController>(GetController()))
+	{
+		if(PC->IsInputKeyDown(EKeys::RightMouseButton))
+		{
+			AUE_MinesweeperGameMode* GameMode= (AUE_MinesweeperGameMode*)GetWorld()->GetAuthGameMode();
+			if(GameMode)
+				GameMode->MoveCamera(0, NewValue);
+		}
+	}
+}
+void AUE_MinesweeperPawn::MouseWheelMoved(float NewValue)
+{
+	AUE_MinesweeperGameMode* GameMode= (AUE_MinesweeperGameMode*)GetWorld()->GetAuthGameMode();
+	if(GameMode)
+		GameMode->ZoomCamera(NewValue);
 }
 
 void AUE_MinesweeperPawn::TraceForBlock(const FVector& Start, const FVector& End, bool bDrawDebugHelpers)

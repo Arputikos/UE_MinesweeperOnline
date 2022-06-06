@@ -44,9 +44,6 @@ protected:
 
 	virtual void Tick(float DeltaSeconds) override;
 
-	UPROPERTY()
-	UCameraControllerComponent* CameraController;
-
 public:
 
 	/** Returns DummyRoot subobject **/
@@ -57,6 +54,9 @@ public:
 	void Update(FMinesweeperMap& map);
 
 	void RemoveBlocks();
+
+	UPROPERTY()
+	UCameraControllerComponent* CameraController;
 };
 
 
