@@ -5,6 +5,11 @@ void UMinesweeperBackend::Connect()
 {
 	if(Initialized)
 		return;
+
+	if(!FModuleManager::Get().IsModuleLoaded("WebSockets"))
+	{
+		FModuleManager::Get().LoadModule("WebSockets");
+	}
 	
 	const FString ServerURL = TEXT("wss://hometask.eg1236.com/game1/");
 	const FString ServerProtocol = TEXT("wss");
