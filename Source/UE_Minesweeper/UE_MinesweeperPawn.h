@@ -22,6 +22,9 @@ public:
 protected:
 	void OnResetVR();
 	void TriggerClick();
+	void MouseMovedX(float NewValue);
+	void MouseMovedY(float NewValue);
+	void MouseWheelMoved(float NewValue);
 	void TraceForBlock(const FVector& Start, const FVector& End, bool bDrawDebugHelpers);
 
 };

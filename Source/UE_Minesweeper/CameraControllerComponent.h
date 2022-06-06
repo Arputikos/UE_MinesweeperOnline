@@ -17,7 +17,12 @@ public:
 
 	void Update(float DeltaTime);
 
+	void Move(float x, float y);
 	void SetupCameraToMap(float SizeX, float SizeY, float BlockSpacing);
+
+	void Zoom(float val) { TargetCameraOrthoWidth -= val; }
+
+	void SetupCameraToMap(float SizeX, float SizeY, float BlockSpacing, FVector gridPos);
 
 protected:
 	UPROPERTY()
