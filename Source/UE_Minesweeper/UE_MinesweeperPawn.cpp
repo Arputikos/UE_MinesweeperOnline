@@ -61,10 +61,6 @@ void AUE_MinesweeperPawn::OnResetVR()
 
 void AUE_MinesweeperPawn::TriggerClick()
 {
-	if (CurrentBlockFocus)
-	{
-		CurrentBlockFocus->HandleClicked();
-	}
 }
 
 void AUE_MinesweeperPawn::TraceForBlock(const FVector& Start, const FVector& End, bool bDrawDebugHelpers)
@@ -79,22 +75,5 @@ void AUE_MinesweeperPawn::TraceForBlock(const FVector& Start, const FVector& End
 	if (HitResult.Actor.IsValid())
 	{
 		AUE_MinesweeperBlock* HitBlock = Cast<AUE_MinesweeperBlock>(HitResult.Actor.Get());
-		if (CurrentBlockFocus != HitBlock)
-		{
-			// if (CurrentBlockFocus)
-			// {
-			// 	CurrentBlockFocus->Highlight(false);
-			// }
-			// if (HitBlock)
-			// {
-			// 	HitBlock->Highlight(true);
-			// }
-			CurrentBlockFocus = HitBlock;
-		}
-	}
-	else if (CurrentBlockFocus)
-	{
-		//CurrentBlockFocus->Highlight(false);
-		CurrentBlockFocus = nullptr;
 	}
 }
