@@ -37,6 +37,7 @@ void UCameraControllerComponent::SetupCameraToMap(float SizeX, float SizeY, floa
 	//Quickly set up the camera
 	if(PlayerCamera)
 	{
+		PlayerCamera->SetRelativeLocation(FVector::ZeroVector);
 		//If the map is more wide than the view, fit on X axis
 		float MapAspectRatio = SizeX / SizeY;
 		if(MapAspectRatio > PlayerCamera->AspectRatio)
