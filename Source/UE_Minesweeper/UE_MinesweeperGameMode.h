@@ -10,6 +10,10 @@
 class UMinesweeperBackend;
 class AUE_MinesweeperBlockGrid;
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnNewGameStarted);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnGameWon);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnGameLost);
+
 /** GameMode class to specify pawn and playercontroller */
 UCLASS(minimalapi)
 class AUE_MinesweeperGameMode : public AGameModeBase
@@ -36,6 +40,15 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void BlockClicked(int x, int y);
+
+	UPROPERTY(BlueprintAssignable)
+	FOnNewGameStarted OnNewGameStarted;
+
+	UPROPERTY(BlueprintAssignable)
+	FOnGameWon OnGameWon;
+
+	UPROPERTY(BlueprintAssignable)
+	FOnGameLost OnGameLost;
 
 protected:
 	//Delegate-called functions

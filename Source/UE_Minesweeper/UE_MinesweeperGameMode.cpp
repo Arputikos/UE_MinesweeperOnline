@@ -29,6 +29,7 @@ void AUE_MinesweeperGameMode::NewGame(int map)
 {
 	//map is valid in <1,4> range
 	Backend->RequestNewLevel(map);
+	OnNewGameStarted.Broadcast();
 }
 
 void AUE_MinesweeperGameMode::BlockClicked(int x, int y)
@@ -41,6 +42,7 @@ void AUE_MinesweeperGameMode::OnNewLevel(FString message)
 	if(BlocksGrid)
 	{
 		BlocksGrid->RemoveBlocks();
+		BlocksGrid->Destroy();
 		BlocksGrid = nullptr;
 	}
 	Backend->RequestMap();
@@ -57,6 +59,16 @@ void AUE_MinesweeperGameMode::OnMapRequestComplete(FString message)
 void AUE_MinesweeperGameMode::OnOpenBlockRequestComplete(FString message)
 {
 	Backend->RequestMap();
+	if(message == "open: OK")
+	{
+		
+	} else if(message == "open: You lose")
+	{
+		OnGameLost.Broadcast();
+	} else
+	{
+		OnGameWon.Broadcast();
+	}
 }
 
 void AUE_MinesweeperGameMode::NewMapFromData(FString message)
