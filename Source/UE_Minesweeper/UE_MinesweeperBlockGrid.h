@@ -3,10 +3,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "CameraControllerComponent.h"
 #include "MinesweeperMap.h"
 #include "GameFramework/Actor.h"
 #include "UE_MinesweeperBlockGrid.generated.h"
 
+class UCameraComponent;
 class AUE_MinesweeperBlock;
 
 /** Class used to spawn blocks and manage score */
@@ -39,6 +41,11 @@ protected:
 	// Begin AActor interface
 	virtual void BeginPlay() override;
 	// End AActor interface
+
+	virtual void Tick(float DeltaSeconds) override;
+
+	UPROPERTY()
+	UCameraControllerComponent* CameraController;
 
 public:
 

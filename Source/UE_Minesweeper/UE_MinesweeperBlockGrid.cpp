@@ -4,29 +4,39 @@
 
 #include "MinesweeperMap.h"
 #include "UE_MinesweeperBlock.h"
-#include "Components/TextRenderComponent.h"
+#include "Camera/CameraActor.h"
+#include "Camera/CameraComponent.h"
 #include "Engine/World.h"
+#include "Kismet/GameplayStatics.h"
 
 #define LOCTEXT_NAMESPACE "PuzzleBlockGrid"
 
 AUE_MinesweeperBlockGrid::AUE_MinesweeperBlockGrid()
 {
+	SetActorTickEnabled(true);
+	this->PrimaryActorTick.bCanEverTick = true;
+	this->PrimaryActorTick.bStartWithTickEnabled = true;
+
 	// Create dummy root scene component
 	DummyRoot = CreateDefaultSubobject<USceneComponent>(TEXT("Dummy0"));
 	RootComponent = DummyRoot;
+
+	CameraController = CreateDefaultSubobject<UCameraControllerComponent>(TEXT("CameraController"));
 	
 	// Set defaults
-	SizeX = 3;
-	SizeY = 5;
-	BlockSpacing = 300.f;
+	BlockSpacing = 270.f;
 }
-
 
 void AUE_MinesweeperBlockGrid::BeginPlay()
 {
 	Super::BeginPlay();
+}
 
-	
+void AUE_MinesweeperBlockGrid::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+
+	CameraController->Update(DeltaSeconds);
 }
 
 void AUE_MinesweeperBlockGrid::NewMap(FMinesweeperMap& map)
@@ -57,6 +67,8 @@ void AUE_MinesweeperBlockGrid::NewMap(FMinesweeperMap& map)
 			}			
 		}
 	}
+
+	CameraController->SetupCameraToMap(SizeX, SizeY, BlockSpacing);
 }
 
 void AUE_MinesweeperBlockGrid::Update(FMinesweeperMap& map)
@@ -78,7 +90,10 @@ void AUE_MinesweeperBlockGrid::Update(FMinesweeperMap& map)
 void AUE_MinesweeperBlockGrid::RemoveBlocks()
 {
 	for(auto b : Blocks)
-		b->Destroy();
+	{
+		if(b)
+			b->Destroy();
+	}
 	
 	Blocks.Empty();
 }
