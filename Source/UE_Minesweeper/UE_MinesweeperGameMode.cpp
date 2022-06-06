@@ -37,6 +37,18 @@ void AUE_MinesweeperGameMode::BlockClicked(int x, int y)
 	Backend->RequestOpenBlock(x, y);
 }
 
+void AUE_MinesweeperGameMode::MoveCamera(float x, float y)
+{
+	if(BlocksGrid)
+		BlocksGrid->CameraController->Move(-x*100.0, -y*100.0);
+}
+
+void AUE_MinesweeperGameMode::ZoomCamera(float z)
+{
+	if(BlocksGrid)
+		BlocksGrid->CameraController->Zoom(z*1200.0);
+}
+
 void AUE_MinesweeperGameMode::OnNewLevel(FString message)
 {
 	if(BlocksGrid)

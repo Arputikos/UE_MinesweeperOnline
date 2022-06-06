@@ -24,6 +24,14 @@ void UCameraControllerComponent::Update(float DeltaTime)
 		PlayerCamera->SetOrthoWidth(FMath::Lerp(PlayerCamera->OrthoWidth, TargetCameraOrthoWidth, DeltaTime));
 }
 
+void UCameraControllerComponent::Move(float x, float y)
+{
+	if(PlayerCamera)
+	{
+		PlayerCamera->AddLocalOffset(FVector(0, x, y));
+	}
+}
+
 void UCameraControllerComponent::SetupCameraToMap(float SizeX, float SizeY, float BlockSpacing)
 {
 	//Quickly set up the camera
