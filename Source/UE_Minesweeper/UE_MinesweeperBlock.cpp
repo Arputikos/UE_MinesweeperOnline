@@ -109,7 +109,7 @@ void AUE_MinesweeperBlock::SetState(int NewState)
 	{
 		//Unhide particle FX
 		if(UnhideParticleSystemClass)
-			UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), UnhideParticleSystemClass, GetActorLocation(), FRotator::ZeroRotator, FVector(3, 3, 3));
+			UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), UnhideParticleSystemClass, GetActorLocation() + FVector(0, 0, 70), FRotator::ZeroRotator, FVector(3, 3, 3));
 	}
 	
 	State = NewState;
@@ -134,7 +134,7 @@ void AUE_MinesweeperBlock::SetState(int NewState)
 		BlockMesh->SetMaterial(0, OrangeMaterial);
 		//Explosion!
 		if(ExplosionParticleSystemClass)
-			UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ExplosionParticleSystemClass, GetActorLocation(), FRotator::ZeroRotator, FVector(4, 4, 4));
+			UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ExplosionParticleSystemClass, GetActorLocation() + FVector(0, 0, 70), FRotator::ZeroRotator, FVector(4, 4, 4));
 	}
 }
 
